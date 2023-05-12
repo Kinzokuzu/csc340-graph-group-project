@@ -3,7 +3,9 @@
 
 #include "Graph.h"
 
-Graph::Graph() {}
+Graph::Graph() {
+  this->size = 0;
+}
 Graph::Graph(int s) {}
 // Big -3
 Graph::~Graph() {}
