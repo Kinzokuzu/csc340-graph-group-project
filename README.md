@@ -8,6 +8,6 @@
 • Implement the breadth first search algorithm  
 • Print out the BFS-tree from a given source vertex  
 • Print the shortest path from *s* to *v*  
-• Unit tests?
+• Unit tests  
 
 ## Style Guide:  

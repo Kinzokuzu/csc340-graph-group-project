@@ -16,6 +16,9 @@ class Graph {
     // of memory
     void addNode(int newNode);
     void addEdge(int u, int v);
+    // Returns and prints the breadth-first-search tree (graph) from a given
+    // source node
+    Graph getBFS(int v);
     // Returns the shortest path from s to v in graph as a list (int*)
     int* getShortestPath(int s, int v);
 
@@ -26,8 +29,5 @@ class Graph {
     int size;
     int **adj_list;
 };
-
-// Returns the breadth-first-search tree (graph) generated from input graph
-Graph* breadthFirstSearch(const Graph &graph);
 
 #endif

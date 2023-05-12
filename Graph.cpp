@@ -1,30 +1,21 @@
 #ifndef GRAPH_CPP_INCLUDE
 #define GRAPH_CPP_INCLUDE
 
-class Graph {
-  public:
-    Graph();
-    Graph(int s); // Sets this->size = s and allocates memory for s nodes
-    // Big 3
-    ~Graph();                          // Deconstructor
-    Graph(const Graph &clone);         // Copy constructor
-    Graph operator=(const Graph &rhs); // Assignment operator
+#include "Graph.h"
 
-    // Increasing the size of the graph (node count) may require reallocation
-    // of memory
-    void addNode(int newNode);
-    void addEdge(int u, int v);
-    // Returns and prints the shortest path from s to v in as a list (int*)
-    int* getShortestPath(int s, int v);
+Graph::Graph() {}
+Graph::Graph(int s) {}
+// Big -3
+Graph::~Graph() {}
+Graph::Graph(const Graph &clone) {}
+Graph Graph::operator=(const Graph &rhs) {}
 
-    void printGraph();
+void Graph::addNode(int newNode) {}
+void Graph::addEdge(int u, int v) {}
 
-  private:
-    int size;
-    int **adj_list;
-};
+Graph Graph::getBFS(int v) {}
+int* Graph::getShortestPath(int s, int v) {}
 
-// Returns the breadth-first-search tree (graph) generated from input graph
-Graph* breadthFirstSearch(const Graph &graph);
+void Graph::printGraph() {}
 
 #endif
