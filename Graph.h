@@ -3,6 +3,16 @@
 
 #include <iostream>
 
+struct Node {
+  int value;
+  Node *prevNode;
+
+  Node();
+  Node(int v, Node *pn);
+
+  Node* getPrevNode();
+};
+
 class Graph {
   public:
     Graph();
@@ -12,8 +22,7 @@ class Graph {
     Graph(const Graph &clone);         // Copy constructor
     Graph operator=(const Graph &rhs); // Assignment operator
 
-    // Increasing the size of the graph (node count) may require reallocation
-    // of memory
+    // Increasing node/edge count requires allocation of memory
     void addNode(int newNode);
     void addEdge(int u, int v);
     // Returns and prints the breadth-first-search tree (graph) from a given
@@ -27,7 +36,7 @@ class Graph {
 
   private:
     int size;
-    int **adj_list;
-};
+    Node **adj_list;
+}; // End class Graph
 
 #endif

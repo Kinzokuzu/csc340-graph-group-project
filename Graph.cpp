@@ -3,9 +3,12 @@
 
 #include "Graph.h"
 
-Graph::Graph() {
-  this->size = 0;
-}
+Node::Node() {}
+Node::Node(int v, Node *pn) {}
+
+Node* Node::getPrevNode() {}
+
+Graph::Graph() {}
 Graph::Graph(int s) {}
 // Big -3
 Graph::~Graph() {}
