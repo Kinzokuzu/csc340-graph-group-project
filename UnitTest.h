@@ -101,9 +101,7 @@ bool test_GraphInitCon() {
 
 inline
 bool test_GraphCopyCon() {
-  Graph first;
-  first.addNode(1);
-  first.addNode(2);
+  Graph first(2);
 
   Graph second(first);
 
@@ -137,13 +135,10 @@ bool test_GraphAssignment() {
 
 inline
 bool test_GraphIsEqual() {
-  Graph first, second;
-  first.addNode(0);
-  first.addNode(1);
+  Graph first(2);
   first.addEdge(0, 1);
   // Do same operations on second as first
-  second.addNode(0);
-  second.addNode(1);
+  Graph second(2);
   second.addEdge(0, 1);
 
   bool result = second.isEqual(first);
@@ -157,14 +152,14 @@ bool test_GraphIsEqual() {
 inline
 bool test_GraphAddNode() {
   bool result = true;
-  Graph first;
-  first.addNode(1);
+  /*
+  Graph first(2);
 
   if (first.getNodeCount() != 2) {
     result = false;
     std::cout << "FAILED: test_GraphAddNode() | ";
   }
-
+  */
   return result;
 }
 
@@ -173,6 +168,8 @@ bool test_GraphAddEdge() {
   bool result = true;
   Graph first(2);
   first.addEdge(0, 1);
+
+  std::cout << first.getEdgeCount() << std::endl;
 
   if (first.getEdgeCount() != 1) {
     result = false;

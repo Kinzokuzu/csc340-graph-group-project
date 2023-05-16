@@ -90,8 +90,7 @@ Graph::Graph(int size) {
     this->nodeCount =  size;
     this->edgeCount = 0;
     // Allocate memory for adjacency list
-    this->adj_list = new Node*;
-    adj_list = nullptr;
+    this->adj_list = new Node*[size];
   }
   catch (std::invalid_argument &e) {
     std::cout << e.what() << std::endl;
@@ -101,7 +100,10 @@ Graph::Graph(int size) {
   }
   // Add size nodes to adjacency list
   for (int i = 0; i < size; i++) {
-    this->addNode(i);
+    Node *curr = new Node;
+    curr->setValue(i);
+    curr->setNext(nullptr);
+    this->adj_list[i] = curr;
   }
 }
 // Big-3
@@ -167,7 +169,7 @@ bool Graph::isEqual(const Graph &comp) {
 void Graph::addNode(int newNodeVal) {
   try{
     // Check if newNode is greater than nodeCount
-    if(newNodeVal <= nodeCount){
+    if(newNodeVal >= nodeCount){
       throw std::invalid_argument("New node must be greater than nodeCount");
     }
     // Allocate memory for new node
@@ -240,13 +242,12 @@ Graph Graph::getBFS(int v)
 
         for (int i = 0; i < this->nodeCount; i++)
         {
-          /* FIX-ME
             if (this->adj_list[node][i] == 1 && !visited[i])
             {
                 visited[i] = true;         // mark the neighbor as visited
                 q.push(i);                 // enqueue the neighbor
                 bfsGraph.addEdge(node, i); // add an edge to the BFS graph
-            } */
+            }
         }
     }
 
@@ -258,6 +259,10 @@ Node* Graph::getShortestPath(int s, int v) {}
 int Graph::getNodeCount() const { return this->nodeCount; }
 int Graph::getEdgeCount() const { return this->edgeCount; }
 
-void Graph::printGraph() {}
+void Graph::printGraph() {
+  for (int i = 0; i < this->nodeCount; i++) {
+    this->adj_list[i]->printList();
+  }
+}
 
 #endif

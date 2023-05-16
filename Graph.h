@@ -2,6 +2,7 @@
 #define GRAPH_H_INCLUDE
 
 #include <iostream>
+#include <vector>
 
 class Node {
   public:
