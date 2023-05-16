@@ -226,3 +226,4 @@ bool test_GraphGetShortestPath() {
   test.addEdge(1, 4);
   test.addEdge(3, 4);
 }
+

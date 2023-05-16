@@ -1,27 +1,24 @@
 #include <iostream>
 #include "Graph.h"
+#include "UnitTest.h"
 
 int main() {
-  Node *head = new Node;
-  Node *prev = new Node;
-  Node *curr = new Node;
-
-  int nodeCount = 10;
-  // Create nodeCount nodes
-  for (int i = 0; i < nodeCount; i++) {
-    if (i == 0) {
-      head->setValue(i);
-      prev = head;
-    } else {
-      Node *newNode = new Node;
-      newNode->setValue(i);
-      prev->setNext(newNode);
-      prev = newNode;
-    }
-  }
-
-  // Print out all nodes in list
-  head->printList();
+  // Test Node
+  std::cout << test_NodeDefCon() << std::endl;
+  std::cout << test_NodeAssignment() << std::endl;
+  std::cout << test_NodeIsEqual() << std::endl;
+  // Test Graph constructors, de-constructors and assignment operator
+  std::cout << test_GraphDefCon() << std::endl;
+  std::cout << test_GraphInitCon() << std::endl;
+  std::cout << test_GraphCopyCon() << std::endl;
+  std::cout << test_GraphDeCon() << std::endl;
+  std::cout << test_GraphAssignment() << std::endl;
+  // Test Graph member functions
+  std::cout << test_GraphIsEqual() << std::endl;
+  std::cout << test_GraphAddNode() << std::endl;
+  std::cout << test_GraphAddEdge() << std::endl;
+  std::cout << test_GraphGetBFS() << std::endl;
+  std::cout << test_GraphGetShortestPath() << std::endl;
 
   return 0;
 }

@@ -46,6 +46,47 @@ bool Node::isEqual(const Node &comp) {
   return result;
 }
 
+Node::Node() {/* Does nothing */}
+// Assignment only copies fields and not addresses
+Node& Node::operator=(const Node &rhs) {
+  // Don't allow self assignment
+  if (this == &rhs) {
+    return *this;
+  }
+
+  this->value = rhs.value;
+  if (rhs.next) {
+    // Recursively assign fields of nextNode
+    Node *nextNode = rhs.next;
+    this->next = nextNode;
+  }
+  else {
+    this->next = nullptr;
+  }
+
+  return *this;
+}
+
+bool Node::isEqual(const Node &comp) {
+  // Compare addresses
+  if (this == &comp)
+    return true;
+
+  bool result = true;
+  // Compare values
+  if (this->value != comp.value)
+    result = false;
+  // Recursively compare subsequent nodes
+  if (this->next && comp.next && result) {
+    result = this->next->isEqual(*comp.next);
+  } // this->next XOR comp.next
+  else if ((!this->next && comp.next) || (this->next && !comp.next)) {
+    result = false;
+  }
+
+  return result;
+}
+
 void Node::setValue(int val) { this->value = val; }
 int Node::getValue() const { return value; }
 
@@ -231,7 +272,11 @@ Graph Graph::getBFS(int v)
 
     return bfsGraph;
 }
+
 int *Graph::getShortestPath(int s, int v) {}
+
+int Graph::getNodeCount() const { return this->nodeCount; }
+int Graph::getEdgeCount() const { return this->edgeCount; }
 
 void Graph::printGraph() {}
 
