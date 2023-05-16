@@ -90,8 +90,7 @@ Graph::Graph(int size) {
     this->nodeCount =  size;
     this->edgeCount = 0;
     // Allocate memory for adjacency list
-    this->adj_list = new Node*;
-    adj_list = nullptr;
+    this->adj_list = new Node*[size];
   }
   catch (std::invalid_argument &e) {
     std::cout << e.what() << std::endl;
@@ -101,7 +100,10 @@ Graph::Graph(int size) {
   }
   // Add size nodes to adjacency list
   for (int i = 0; i < size; i++) {
-    this->addNode(i);
+    Node *curr = new Node;
+    curr->setValue(i);
+    curr->setNext(nullptr);
+    this->adj_list[i] = curr;
   }
 }
 // Big-3
@@ -167,7 +169,7 @@ bool Graph::isEqual(const Graph &comp) {
 void Graph::addNode(int newNodeVal) {
   try{
     // Check if newNode is greater than nodeCount
-    if(newNodeVal <= nodeCount){
+    if(newNodeVal >= nodeCount){
       throw std::invalid_argument("New node must be greater than nodeCount");
     }
     // Allocate memory for new node
@@ -226,21 +228,21 @@ void Graph::addEdge(int u, int v) {
 
 Graph Graph::getBFS(int v)
 {
-    Graph bfsGraph(size);                   // create a new graph for BFS traversal
-    std::vector<bool> visited(size, false); // keep track of visited nodes
+    Graph bfsGraph(this->nodeCount);                   // create a new graph for BFS traversal
+    std::vector<bool> visited(this->nodeCount, false); // keep track of visited nodes
     std::queue<int> q;                      // queue for BFS traversal
 
     visited[v] = true; // mark the starting node as visited
     q.push(v);         // enqueue the starting node
-
+/*
     while (!q.empty()) // while queue is not empty
     {
         int node = q.front(); // get the front element of the queue
         q.pop();              // remove the front element from the queue
 
-        for (int i = 0; i < size; i++)
+        for (int i = 0; i < this->nodeCount; i++)
         {
-            if (adj_list[node][i] == 1 && !visited[i])
+            if (this->adj_list[node][i] == 1 && !visited[i])
             {
                 visited[i] = true;         // mark the neighbor as visited
                 q.push(i);                 // enqueue the neighbor
@@ -248,7 +250,7 @@ Graph Graph::getBFS(int v)
             }
         }
     }
-
+*/
     return bfsGraph;
 }
 
@@ -257,6 +259,10 @@ Node* Graph::getShortestPath(int s, int v) {}
 int Graph::getNodeCount() const { return this->nodeCount; }
 int Graph::getEdgeCount() const { return this->edgeCount; }
 
-void Graph::printGraph() {}
+void Graph::printGraph() {
+  for (int i = 0; i < this->nodeCount; i++) {
+    this->adj_list[i]->printList();
+  }
+}
 
 #endif
