@@ -13,23 +13,26 @@ class Node {
     void setValue(int val);
     int getValue() const;
 
-    void setNext(Node *n);
-    Node* getNext();
+  void setValue(int val);
+  int getValue() const;
 
-    void printList();
+  void setNext(Node *n);
+  Node *getNext();
 
-  private:
-    int value;
-    Node *next;
+  void printList();
+
+private:
+  int value;
+  Node *next;
 }; // End class Node
 
 class Graph {
   public:
-    Graph(); // Sets nodeCount = 0, edgeCount = 0
+    Graph();         // Sets nodeCount = 0, edgeCount = 0
     Graph(int size); // Sets nodeCount = size and create size nodes
     // Big 3
-    ~Graph();                          // De-constructor
-    Graph(const Graph &clone);         // Copy constructor
+    ~Graph();                           // De-constructor
+    Graph(const Graph &clone);          // Copy constructor
     Graph& operator=(const Graph &rhs); // Assignment operator
 
     bool isEqual(const Graph &comp);

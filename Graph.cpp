@@ -2,6 +2,49 @@
 #define GRAPH_CPP_INCLUDE
 
 #include "Graph.h"
+#include <vector>
+#include <queue>
+
+Node::Node() {/* Does nothing */}
+// Assignment only copies fields and not addresses
+Node& Node::operator=(const Node &rhs) {
+  // Don't allow self assignment
+  if (this == &rhs) {
+    return *this;
+  }
+
+  this->value = rhs.value;
+  if (rhs.next) {
+    // Recursively assign fields of nextNode
+    Node *nextNode = rhs.next;
+    this->next = nextNode;
+  }
+  else {
+    this->next = nullptr;
+  }
+
+  return *this;
+}
+
+bool Node::isEqual(const Node &comp) {
+  // Compare addresses
+  if (this == &comp)
+    return true;
+
+  bool result = true;
+  // Compare values
+  if (this->value != comp.value)
+    result = false;
+  // Recursively compare subsequent nodes
+  if (this->next && comp.next && result) {
+    result = this->next->isEqual(*comp.next);
+  } // this->next XOR comp.next
+  else if ((!this->next && comp.next) || (this->next && !comp.next)) {
+    result = false;
+  }
+
+  return result;
+}
 
 Node::Node() {/* Does nothing */}
 // Assignment only copies fields and not addresses
@@ -170,11 +213,67 @@ bool Graph::isEqual(const Graph &comp) {
   return result;
 }
 
-void Graph::addNode(int newNode) {}
+void Graph::addNode(int newNodeVal) {
+  try{
+    // Check if newNode is greater than nodeCount
+    if(newNodeVal <= nodeCount){
+      throw std::invalid_argument("New node must be greater than nodeCount");
+    }
+    // Allocate memory for new node
+    Node *newNode = new Node;
+    // Set value of new node to newNode
+    newNode->setValue(newNodeVal);
+    // Set next of new node to nullptr because it is at the end of the list
+    newNode->setNext(nullptr);
+    // Add new node to adj_list, this should always be right because if the node count is 0 then the new node will be at index 0 and then it will increment to 1 and so on
+    adj_list[nodeCount] = newNode;
+    // Increment nodeCount
+    nodeCount++;
+  }
+  //Catch invalid argument
+  catch(std::invalid_argument &e){
+    std::cout << e.what() << std::endl;
+  }
+  //Catch bad alloc
+  catch(std::bad_alloc &e){
+    std::cout << e.what() << std::endl;
+  }
+  //Catch unknown error
+  catch(...){
+    std::cout << "Unknown error" << std::endl;
+  }
+}
 void Graph::addEdge(int u, int v) {}
 
-Graph Graph::getBFS(int v) {}
-Node* Graph::getShortestPath(int s, int v) {}
+Graph Graph::getBFS(int v)
+{
+    Graph bfsGraph(size);                   // create a new graph for BFS traversal
+    std::vector<bool> visited(size, false); // keep track of visited nodes
+    std::queue<int> q;                      // queue for BFS traversal
+
+    visited[v] = true; // mark the starting node as visited
+    q.push(v);         // enqueue the starting node
+
+    while (!q.empty()) // while queue is not empty
+    {
+        int node = q.front(); // get the front element of the queue
+        q.pop();              // remove the front element from the queue
+
+        for (int i = 0; i < size; i++)
+        {
+            if (adj_list[node][i] == 1 && !visited[i])
+            {
+                visited[i] = true;         // mark the neighbor as visited
+                q.push(i);                 // enqueue the neighbor
+                bfsGraph.addEdge(node, i); // add an edge to the BFS graph
+            }
+        }
+    }
+
+    return bfsGraph;
+}
+
+int *Graph::getShortestPath(int s, int v) {}
 
 int Graph::getNodeCount() const { return this->nodeCount; }
 int Graph::getEdgeCount() const { return this->edgeCount; }
