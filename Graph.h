@@ -11,7 +11,7 @@ class Node {
     bool isEqual(const Node &comp);
 
     void setValue(int val);
-    int getValue();
+    int getValue() const;
 
     void setNext(Node *n);
     Node* getNext();
@@ -25,13 +25,14 @@ class Node {
 
 class Graph {
   public:
-    Graph();
-    Graph(int s); // Sets this->size = s and allocates memory for s nodes
+    Graph(); // Sets nodeCount = 1, edgeCount = 0, and creates 1 node (value = 0)
+    Graph(int size); // Sets nodeCount = size and allocates memory for size nodes
     // Big 3
-    ~Graph();                          // Deconstructor
+    ~Graph();                          // De-constructor
     Graph(const Graph &clone);         // Copy constructor
-    Graph operator=(const Graph &rhs); // Assignment operator
+    Graph& operator=(const Graph &rhs); // Assignment operator
 
+    bool isEqual(const Graph &comp);
     // Adds a new node with specified value to adj_list and increments nodeCount
     // value must be > nodeCount
     void addNode(int value);
@@ -41,8 +42,11 @@ class Graph {
     // Returns and prints the breadth-first-search tree (graph) from a given
     // source node
     Graph getBFS(int v);
-    // Returns the shortest path from s to v in graph as a list (int*)
-    int* getShortestPath(int s, int v);
+    // Returns and prints the shortest path from s to v in graph as a list (Node*)
+    Node* getShortestPath(int s, int v);
+
+    int getNodeCount() const;
+    int getEdgeCount() const;
 
     void printGraph();
 
