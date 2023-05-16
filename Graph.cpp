@@ -243,7 +243,35 @@ void Graph::addNode(int newNodeVal) {
     std::cout << "Unknown error" << std::endl;
   }
 }
-void Graph::addEdge(int u, int v) {}
+
+void Graph::addEdge(int u, int v) {
+    try{
+    // Check if u and v are valid node indexes
+    if(u >= nodeCount || v >= nodeCount || u < 0 || v < 0){
+      throw std::invalid_argument("Invalid node indexes");
+    }
+    // Find the end of the adjacency list for node u
+    Node *curr = adj_list[u];
+    while(curr->getNext()){
+      curr = curr->getNext();
+    }
+    // Create a new node for node v
+    Node *newNode = new Node;
+    newNode->setValue(v);
+    newNode->setNext(nullptr);
+    // Append the new node to the end of the adjacency list for node u
+    curr->setNext(newNode);
+  }
+  catch(std::invalid_argument &e){
+    std::cout << e.what() << std::endl;
+  }
+  catch(std::bad_alloc &e){
+    std::cout << e.what() << std::endl;
+  }
+  catch(...){
+    std::cout << "Unknown error" << std::endl;
+  }
+}
 
 Graph Graph::getBFS(int v)
 {
