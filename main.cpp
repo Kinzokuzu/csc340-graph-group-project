@@ -1,43 +1,27 @@
 #include <iostream>
+#include "Graph.h"
 
-int main()
-{
-  // Create a graph of nodeCount nodes (nodes are represented by ints)
-  int nodeCount = 3;
-  int **Graph = new int *[nodeCount];
+int main() {
+  Node *head = new Node;
+  Node *prev = new Node;
+  Node *curr = new Node;
 
-  int num = 1; // Just for printing, not an accurate description of node
-  // For every node, create a node list
-  for (int i = 0; i < nodeCount; i++)
-  {
-    Graph[i] = new int[i + 1]; // Graph[i] is a node list
-    *Graph[i] = num;           // Assigning first node in Graph[i] an arbitrary value
-    num++;
-
-    // Assigning an arbitrary value for every subsequent node in Graph[i]
-    for (int j = 1; j < i + 1; j++)
-    {
-      Graph[i][j] = num;
-      num++;
+  int nodeCount = 10;
+  // Create nodeCount nodes
+  for (int i = 0; i < nodeCount; i++) {
+    if (i == 0) {
+      head->setValue(i);
+      prev = head;
+    } else {
+      Node *newNode = new Node;
+      newNode->setValue(i);
+      prev->setNext(newNode);
+      prev = newNode;
     }
   }
 
-  // Printing out the graph.  Again, printed values are arbitrary
-  for (int i = 0; i < nodeCount; i++)
-  {
-    for (int j = 0; j < i + 1; j++)
-    {
-      if (j == 0)
-      {
-        std::cout << Graph[i][j];
-      }
-      else
-      {
-        std::cout << " -> " << Graph[i][j];
-      }
-    }
-    std::cout << std::endl;
-  }
+  // Print out all nodes in list
+  head->printList();
 
   return 0;
 }
