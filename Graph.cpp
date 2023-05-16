@@ -234,7 +234,7 @@ Graph Graph::getBFS(int v)
 
     visited[v] = true; // mark the starting node as visited
     q.push(v);         // enqueue the starting node
-
+/*
     while (!q.empty()) // while queue is not empty
     {
         int node = q.front(); // get the front element of the queue
@@ -250,7 +250,7 @@ Graph Graph::getBFS(int v)
             }
         }
     }
-
+*/
     return bfsGraph;
 }
 

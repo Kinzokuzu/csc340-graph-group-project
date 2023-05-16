@@ -169,8 +169,6 @@ bool test_GraphAddEdge() {
   Graph first(2);
   first.addEdge(0, 1);
 
-  std::cout << first.getEdgeCount() << std::endl;
-
   if (first.getEdgeCount() != 1) {
     result = false;
     std::cout << "FAILED: test_GraphAddEdge() | ";
