@@ -72,7 +72,7 @@ bool test_GraphDefCon() {
 
   Graph test;
   // Test nodeCount, edgeCount
-  if (test.getNodeCount() != 1) {
+  if (test.getNodeCount() != 0) {
     result = false;
     std::cout << "FAILED: test_GraphDefCon: nodeCount != 0 | ";
   }
@@ -138,13 +138,13 @@ bool test_GraphAssignment() {
 inline
 bool test_GraphIsEqual() {
   Graph first, second;
+  first.addNode(0);
   first.addNode(1);
-  first.addNode(2);
-  first.addEdge(0, 2);
+  first.addEdge(0, 1);
   // Do same operations on second as first
+  second.addNode(0);
   second.addNode(1);
-  second.addNode(2);
-  second.addEdge(0, 2);
+  second.addEdge(0, 1);
 
   bool result = second.isEqual(first);
   if (!result) {
