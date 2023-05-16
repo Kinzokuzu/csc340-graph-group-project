@@ -5,48 +5,10 @@
 #include <vector>
 #include <queue>
 
-Node::Node() {/* Does nothing */}
-// Assignment only copies fields and not addresses
-Node& Node::operator=(const Node &rhs) {
-  // Don't allow self assignment
-  if (this == &rhs) {
-    return *this;
-  }
-
-  this->value = rhs.value;
-  if (rhs.next) {
-    // Recursively assign fields of nextNode
-    Node *nextNode = rhs.next;
-    this->next = nextNode;
-  }
-  else {
-    this->next = nullptr;
-  }
-
-  return *this;
+Node::Node() {
+  this->value = -1;
+  this->next = nullptr;
 }
-
-bool Node::isEqual(const Node &comp) {
-  // Compare addresses
-  if (this == &comp)
-    return true;
-
-  bool result = true;
-  // Compare values
-  if (this->value != comp.value)
-    result = false;
-  // Recursively compare subsequent nodes
-  if (this->next && comp.next && result) {
-    result = this->next->isEqual(*comp.next);
-  } // this->next XOR comp.next
-  else if ((!this->next && comp.next) || (this->next && !comp.next)) {
-    result = false;
-  }
-
-  return result;
-}
-
-Node::Node() {/* Does nothing */}
 // Assignment only copies fields and not addresses
 Node& Node::operator=(const Node &rhs) {
   // Don't allow self assignment
@@ -91,7 +53,7 @@ void Node::setValue(int val) { this->value = val; }
 int Node::getValue() const { return value; }
 
 void Node::setNext(Node *n) { this->next = n; }
-Node* Node::getNext() { return next; }
+Node* Node::getNext() const { return next; }
 
 void Node::printList() {
   Node *curr = this;
@@ -108,7 +70,7 @@ void Node::printList() {
 }
 
 Graph::Graph() {
-  this->nodeCount = 1;
+  this->nodeCount = 0;
   this->edgeCount = 0;
   // Allocate memory for adjacency list
   try {
@@ -117,19 +79,8 @@ Graph::Graph() {
   catch (std::bad_alloc &e) {
     std::cout << e.what() << std::endl;
   }
-  // Create initNode outside first try's scope
-  Node *initNode;
-  try {
-    initNode = new Node;
-  }
-  catch (std::bad_alloc &e) {
-    std::cout << e.what() << std::endl;
-  }
-  initNode->setValue(0);
-  initNode->setNext(nullptr);
-
-  adj_list[0] = initNode;
 }
+
 Graph::Graph(int size) {
   try {
     if (size <= 0) {
@@ -301,7 +252,7 @@ Graph Graph::getBFS(int v)
     return bfsGraph;
 }
 
-int *Graph::getShortestPath(int s, int v) {}
+Node* Graph::getShortestPath(int s, int v) {}
 
 int Graph::getNodeCount() const { return this->nodeCount; }
 int Graph::getEdgeCount() const { return this->edgeCount; }

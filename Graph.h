@@ -5,7 +5,7 @@
 
 class Node {
   public:
-    Node(); // Does nothing
+    Node(); // Sets value = -1, next = nullptr
     // Assignment only copies fields and not addresses
     Node& operator=(const Node &rhs);
     bool isEqual(const Node &comp);
@@ -13,11 +13,8 @@ class Node {
     void setValue(int val);
     int getValue() const;
 
-  void setValue(int val);
-  int getValue() const;
-
-  void setNext(Node *n);
-  Node *getNext();
+    void setNext(Node *n);
+    Node* getNext() const;
 
   void printList();
 
