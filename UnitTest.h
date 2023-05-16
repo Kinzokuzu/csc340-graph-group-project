@@ -225,5 +225,13 @@ bool test_GraphGetShortestPath() {
   test.addEdge(1, 3);
   test.addEdge(1, 4);
   test.addEdge(3, 4);
+  Node *test_list = test.getShortestPath(0, 4);
+
+  bool result = test_list->isEqual(*expected_list);
+  if (!result) {
+    std::cout << "FAILED: test_GraphGetShortestPath | ";
+  }
+
+  return result;
 }
 

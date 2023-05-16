@@ -226,8 +226,8 @@ void Graph::addEdge(int u, int v) {
 
 Graph Graph::getBFS(int v)
 {
-    Graph bfsGraph(size);                   // create a new graph for BFS traversal
-    std::vector<bool> visited(size, false); // keep track of visited nodes
+    Graph bfsGraph(this->nodeCount);                   // create a new graph for BFS traversal
+    std::vector<bool> visited(this->nodeCount, false); // keep track of visited nodes
     std::queue<int> q;                      // queue for BFS traversal
 
     visited[v] = true; // mark the starting node as visited
@@ -238,14 +238,15 @@ Graph Graph::getBFS(int v)
         int node = q.front(); // get the front element of the queue
         q.pop();              // remove the front element from the queue
 
-        for (int i = 0; i < size; i++)
+        for (int i = 0; i < this->nodeCount; i++)
         {
-            if (adj_list[node][i] == 1 && !visited[i])
+          /* FIX-ME
+            if (this->adj_list[node][i] == 1 && !visited[i])
             {
                 visited[i] = true;         // mark the neighbor as visited
                 q.push(i);                 // enqueue the neighbor
                 bfsGraph.addEdge(node, i); // add an edge to the BFS graph
-            }
+            } */
         }
     }
 
