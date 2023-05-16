@@ -5,6 +5,11 @@
 
 class Node {
   public:
+    Node(); // Does nothing
+    // Assignment only copies fields and not addresses
+    Node& operator=(const Node &rhs);
+    bool isEqual(const Node &comp);
+
     void setValue(int val);
     int getValue();
 

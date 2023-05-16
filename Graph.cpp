@@ -3,6 +3,52 @@
 
 #include "Graph.h"
 
+Node::Node() {}
+// Assignment only copies fields and not addresses
+Node& Node::operator=(const Node &rhs) {
+  // Don't allow self assignment
+  if (this == &rhs) {
+    return *this;
+  }
+
+  this->value = rhs.value;
+  if (rhs.next) {
+    // Allocate memory to get a different address for next
+    Node *nextNode;
+    try {
+      nextNode = new Node;
+    } catch (std::bad_alloc &e) {
+      std::cout << e.what() << std::endl;
+    }
+    // Recursively assign fields of nextNode
+    nextNode = rhs.next;
+    this->next = nextNode;
+  } else {
+    this->next = nullptr;
+  }
+
+  return *this;
+}
+
+bool Node::isEqual(const Node &comp) {
+  bool result = true;
+  // Check address
+  if (this == &comp) {
+    return result;
+  }
+  // Check values
+  if (this->value != comp.value)
+    result = false;
+  // Recursively check subsequent nodes
+  if (this->next && comp.next && result) {
+    result = this->next->isEqual(*comp.next);
+  } else {
+    result = false;
+  }
+
+  return result;
+}
+
 void Node::setValue(int val) { this->value = val; }
 int Node::getValue() { return value; }
 
