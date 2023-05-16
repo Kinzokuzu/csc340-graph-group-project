@@ -25,8 +25,8 @@ class Node {
 
 class Graph {
   public:
-    Graph(); // Sets nodeCount = 1, edgeCount = 0, and creates 1 node (value = 0)
-    Graph(int size); // Sets nodeCount = size and allocates memory for size nodes
+    Graph(); // Sets nodeCount = 0, edgeCount = 0
+    Graph(int size); // Sets nodeCount = size and create size nodes
     // Big 3
     ~Graph();                          // De-constructor
     Graph(const Graph &clone);         // Copy constructor
