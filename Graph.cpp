@@ -118,8 +118,11 @@ Graph::Graph(const Graph &clone) {
   this->nodeCount = clone.nodeCount;
   this->edgeCount = clone.edgeCount;
   // Allocate memory to this->adj_list
-  if (!this->adj_list) {
+  try {
     this->adj_list = new Node*;
+  }
+  catch (std::bad_alloc &e) {
+    std::cout << e.what() << std::endl;
   }
   // Copy all nodes/node lists from rhs to this
   for (int i = 0; i < clone.nodeCount; i++) {
@@ -136,8 +139,11 @@ Graph& Graph::operator=(const Graph &rhs) {
   this->nodeCount = rhs.nodeCount;
   this->edgeCount = rhs.edgeCount;
   // Allocate memory to this->adj_list
-  if (!this->adj_list) {
+  try {
     this->adj_list = new Node*;
+  }
+  catch (std::bad_alloc &e) {
+    std::cout << e.what() << std::endl;
   }
   // Copy all nodes/node lists from rhs to this
   for (int i = 0; i < rhs.nodeCount; i++) {
