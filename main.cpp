@@ -2,18 +2,6 @@
 #include "UnitTest.h"
 
 int main() {
-
-  Graph first(3);
-  first.addEdge(0, 1);
-  first.addEdge(0, 2);
-  first.printGraph();
-
-  Graph second(first);
-  second.printGraph();
-
-  std::cout << first.isEqual(second) << std::endl;
-  std::cout << second.isEqual(first) << std::endl;
-
   std::cout << "Tests\n";
   // Test Node
   std::cout << test_NodeDefCon() << std::endl;

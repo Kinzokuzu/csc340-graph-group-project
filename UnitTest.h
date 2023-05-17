@@ -209,9 +209,18 @@ bool test_GraphGetBFS() {
 
 inline
 bool test_GraphGetShortestPath() {
-  Node *expected_list;
+  Node *expected_list, *node1, *node4;
   try {
     expected_list = new Node;
+    node1 = new Node;
+    node4 = new Node;
+    // Expected list is as follows: 0 -> 1 -> 4
+    expected_list->setValue(0);
+    expected_list->setNext(node1);
+    node1->setValue(1);
+    node1->setNext(node4);
+    node4->setValue(4);
+    node4->setNext(nullptr);
   }
   catch (std::bad_alloc &e) {
     std::cout << e.what() << std::endl;
