@@ -31,7 +31,7 @@ Graph Graph::getBFS(int v)
 
         for (int i = 0; i < size; i++)
         {
-            if (adj_list[node][i].value == 1 && !visited[i])
+            if (adj_list[node][i] == 1 && !visited[i])
             {
                 visited[i] = true;         // mark the neighbor as visited
                 q.push(i);                 // enqueue the neighbor
