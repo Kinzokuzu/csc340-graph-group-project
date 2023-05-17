@@ -72,7 +72,7 @@ bool test_GraphDefCon() {
 
   Graph test;
   // Test nodeCount, edgeCount
-  if (test.getNodeCount() != 1) {
+  if (test.getNodeCount() != 0) {
     result = false;
     std::cout << "FAILED: test_GraphDefCon: nodeCount != 0 | ";
   }
@@ -101,9 +101,7 @@ bool test_GraphInitCon() {
 
 inline
 bool test_GraphCopyCon() {
-  Graph first;
-  first.addNode(1);
-  first.addNode(2);
+  Graph first(2);
 
   Graph second(first);
 
@@ -137,14 +135,11 @@ bool test_GraphAssignment() {
 
 inline
 bool test_GraphIsEqual() {
-  Graph first, second;
-  first.addNode(1);
-  first.addNode(2);
-  first.addEdge(0, 2);
+  Graph first(2);
+  first.addEdge(0, 1);
   // Do same operations on second as first
-  second.addNode(1);
-  second.addNode(2);
-  second.addEdge(0, 2);
+  Graph second(2);
+  second.addEdge(0, 1);
 
   bool result = second.isEqual(first);
   if (!result) {
@@ -156,9 +151,12 @@ bool test_GraphIsEqual() {
 
 inline
 bool test_GraphAddNode() {
+  std::cout << "look at test_GraphAddNode | ";
+  return false;
+  /*
   bool result = true;
-  Graph first;
-  first.addNode(1);
+
+  Graph first(2);
 
   if (first.getNodeCount() != 2) {
     result = false;
@@ -166,6 +164,7 @@ bool test_GraphAddNode() {
   }
 
   return result;
+  */
 }
 
 inline
@@ -225,4 +224,13 @@ bool test_GraphGetShortestPath() {
   test.addEdge(1, 3);
   test.addEdge(1, 4);
   test.addEdge(3, 4);
+  Node *test_list = test.getShortestPath(0, 4);
+
+  bool result = test_list->isEqual(*expected_list);
+  if (!result) {
+    std::cout << "FAILED: test_GraphGetShortestPath | ";
+  }
+
+  return result;
 }
+
