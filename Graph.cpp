@@ -260,7 +260,62 @@ Graph Graph::getBFS(int v)
     return bfsGraph;
 }
 
-Node* Graph::getShortestPath(int s, int v) {}
+Node* Graph::getShortestPath(int s, int v) {
+  std::vector<bool> visited(this->nodeCount, false); // keep track of visited nodes
+  std::vector<int> parent(this->nodeCount, -1); // keep track of parent nodes in the shortest path
+  std::queue<int> q; // queue for BFS traversal
+
+  visited[s] = true; // mark the starting node as visited
+  q.push(s); // enqueue the starting node
+
+  while (!q.empty()) {
+    int node = q.front();
+    q.pop();
+
+    Node* currentNode = this->adj_list[node]->getNext();
+    while (currentNode != nullptr) {
+      int neighbor = currentNode->getValue();
+      if (!visited[neighbor]) {
+        visited[neighbor] = true;
+        parent[neighbor] = node;
+        q.push(neighbor);
+        if (neighbor == v)
+          break; // stop BFS if the destination node is found
+      }
+      currentNode = currentNode->getNext();
+    }
+  }
+
+  // Check if there is a path from s to v
+  if (parent[v] == -1) {
+    std::cout << "No path from " << s << " to " << v << " exists." << std::endl;
+    return nullptr;
+  }
+
+  // Check if the destination is the starting node
+  if (s == v) {
+    Node* path = new Node;
+    path->setValue(v);
+    return path;
+  }
+
+  // Build the shortest path from s to v
+  Node* path = nullptr;
+  int current = v;
+  while (current != -1) {
+    Node* newNode = new Node;
+    newNode->setValue(current);
+    newNode->setNext(path);
+    path = newNode;
+    current = parent[current];
+  }
+
+  // Print the shortest path
+  path->printList();
+
+  return path;
+}
+
 
 int Graph::getNodeCount() const { return this->nodeCount; }
 int Graph::getEdgeCount() const { return this->edgeCount; }
