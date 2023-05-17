@@ -285,23 +285,30 @@ Graph Graph::getBFS(int v)
 
     visited[v] = true; // mark the starting node as visited
     q.push(v);         // enqueue the starting node
-                       /*
-                           while (!q.empty()) // while queue is not empty
-                           {
-                               int node = q.front(); // get the front element of the queue
-                               q.pop();              // remove the front element from the queue
-                   
-                               for (int i = 0; i < this->nodeCount; i++)
-                               {
-                                   if (this->adj_list[node][i] == 1 && !visited[i])
-                                   {
-                                       visited[i] = true;         // mark the neighbor as visited
-                                       q.push(i);                 // enqueue the neighbor
-                                       bfsGraph.addEdge(node, i); // add an edge to the BFS graph
-                                   }
-                               }
-                           }
-                       */
+
+    while (!q.empty()) // while queue is not empty
+    {
+        int nodeIndex = q.front();        // get the front element of the queue
+        q.pop();                          // remove the front element from the queue
+        Node *node = adj_list[nodeIndex]; // get the actual node from the adjacency list
+
+        Node *curr = node; // pointer to traverse the adjacency list of the current node
+
+        while (curr != nullptr)
+        {
+            int neighbor = curr->getValue(); // get the value of the neighbor node
+
+            if (!visited[neighbor])
+            {
+                visited[neighbor] = true;              // mark the neighbor as visited
+                q.push(neighbor);                      // enqueue the neighbor
+                bfsGraph.addEdge(nodeIndex, neighbor); // add an edge to the BFS graph
+            }
+
+            curr = curr->getNext(); // move to the next neighbor
+        }
+    }
+
     return bfsGraph;
 }
 
