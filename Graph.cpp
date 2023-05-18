@@ -2,8 +2,6 @@
 #define GRAPH_CPP_INCLUDE
 
 #include "Graph.h"
-#include <vector>
-#include <queue>
 
 Node::Node() {
   this->value = -1;
@@ -54,6 +52,26 @@ int Node::getValue() const { return value; }
 
 void Node::setNext(Node *n) { this->next = n; }
 Node* Node::getNext() const { return next; }
+
+void Node::addNode(int val) {
+  // Iterate to the last node in adjacency list
+  Node *curr = this;
+  while(curr->getNext()) {
+    curr = curr->getNext();
+  }
+  // Create new node to append
+  Node *newNode;
+  try {
+    newNode = new Node;
+    newNode->setValue(val);
+    newNode->setNext(nullptr);
+  }
+  catch (std::bad_alloc &e) {
+    std::cout << e.what() << std::endl;
+  }
+  // Append new node
+  curr->setNext(newNode);
+}
 
 void Node::printList() {
   Node *curr = this;
@@ -171,7 +189,7 @@ bool Graph::isEqual(const Graph &comp) {
 
   return result;
 }
-
+/*
 void Graph::addNode(int newNodeVal) {
   try{
     // Check if newNode is greater than nodeCount
@@ -202,62 +220,89 @@ void Graph::addNode(int newNodeVal) {
     std::cout << "Unknown error" << std::endl;
   }
 }
-
+*/
 void Graph::addEdge(int u, int v) {
-    try{
-    // Check if u and v are valid node indexes
-    if(u >= nodeCount || v >= nodeCount || u < 0 || v < 0){
+  try {
+    // if u and v are are greater than nodeCount valid node indexes
+    if (u >= nodeCount || v >= nodeCount || u < 0 || v < 0) {
       throw std::invalid_argument("Invalid node indexes");
     }
-    // Find the end of the adjacency list for node u
-    Node *curr = adj_list[u];
-    while(curr->getNext()){
+
+    //the end of the adjacency list for node u
+    Node* curr = adj_list[u];
+    while (curr->getNext()) {
       curr = curr->getNext();
     }
-    // Create a new node for node v
-    Node *newNode = new Node;
+
+    // Create a new node for node v and append it to the end of the adjacency
+    // list for node u
+    Node* newNode = new Node;
     newNode->setValue(v);
     newNode->setNext(nullptr);
-    // Append the new node to the end of the adjacency list for node u
     curr->setNext(newNode);
-  }
-  catch(std::invalid_argument &e){
+    // Increment the edge count
+    edgeCount++;
+/*  *** Implementation for undirected graph ***
+    // Add an edge from v to u by finding the end of the adjacency list for node v
+    curr = adj_list[v];
+    while (curr->getNext()) {
+      curr = curr->getNext();
+    }
+
+    // Create a new node for node u and append it to the end of the adjacency
+    // list for node v
+    newNode = new Node;
+    newNode->setValue(u);
+    newNode->setNext(nullptr);
+    curr->setNext(newNode);
+*/
+    //Catch invalid argument
+  } catch (std::invalid_argument& e) {
     std::cout << e.what() << std::endl;
-  }
-  catch(std::bad_alloc &e){
+    //Catch bad alloc
+  } catch (std::bad_alloc& e) {
     std::cout << e.what() << std::endl;
-  }
-  catch(...){
+    //Catch unknown error
+  } catch (...) {
     std::cout << "Unknown error" << std::endl;
   }
 }
 
 Graph Graph::getBFS(int v)
 {
-    Graph bfsGraph(this->nodeCount);                   // create a new graph for BFS traversal
-    std::vector<bool> visited(this->nodeCount, false); // keep track of visited nodes
-    std::queue<int> q;                      // queue for BFS traversal
+  Graph bfsGraph(this->nodeCount);                   // create a new graph for BFS traversal
+  std::vector<bool> visited(this->nodeCount, false); // keep track of visited nodes
+  std::queue<int> q;                                 // queue for BFS traversal
 
-    visited[v] = true; // mark the starting node as visited
-    q.push(v);         // enqueue the starting node
-/*
-    while (!q.empty()) // while queue is not empty
+  visited[v] = true; // mark the starting node as visited
+  q.push(v);         // enqueue the starting node
+
+  while (!q.empty()) // while queue is not empty
+  {
+    int nodeIndex = q.front();        // get the front element of the queue
+    q.pop();                          // remove the front element from the queue
+    Node *node = adj_list[nodeIndex]; // get the actual node from the adjacency list
+
+    Node *curr = node; // pointer to traverse the adjacency list of the current node
+
+    while (curr != nullptr)
     {
-        int node = q.front(); // get the front element of the queue
-        q.pop();              // remove the front element from the queue
+      int neighbor = curr->getValue(); // get the value of the neighbor node
 
-        for (int i = 0; i < this->nodeCount; i++)
-        {
-            if (this->adj_list[node][i] == 1 && !visited[i])
-            {
-                visited[i] = true;         // mark the neighbor as visited
-                q.push(i);                 // enqueue the neighbor
-                bfsGraph.addEdge(node, i); // add an edge to the BFS graph
-            }
-        }
+      if (!visited[neighbor])
+      {
+        visited[neighbor] = true;              // mark the neighbor as visited
+        q.push(neighbor);                      // enqueue the neighbor
+        bfsGraph.addEdge(nodeIndex, neighbor); // add an edge to the BFS graph
+      }
+
+      curr = curr->getNext(); // move to the next neighbor
     }
-*/
-    return bfsGraph;
+  }
+  // Print BFS tree (Graph)
+  bfsGraph.printGraph();
+
+  return bfsGraph;
 }
 
 Node* Graph::getShortestPath(int s, int v) {

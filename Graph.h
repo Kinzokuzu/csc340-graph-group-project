@@ -2,6 +2,7 @@
 #define GRAPH_H_INCLUDE
 
 #include <iostream>
+#include <queue>
 #include <vector>
 
 class Node {
@@ -17,7 +18,10 @@ class Node {
     void setNext(Node *n);
     Node* getNext() const;
 
-  void printList();
+    // Appends a node with value val to the list (Node*) that calls it
+    void addNode(int val);
+
+    void printList();
 
 private:
   int value;
@@ -34,9 +38,13 @@ class Graph {
     Graph& operator=(const Graph &rhs); // Assignment operator
 
     bool isEqual(const Graph &comp);
-    // Adds a new node with specified value to adj_list and increments nodeCount
-    // value must be > nodeCount
-    void addNode(int value);
+    /* • addNode() moved to class Node
+     * • Old implementation:
+     *     Adds a new node with specified value to adj_list and increments
+     *     nodeCount value must be > nodeCount
+     *
+     * void addNode(int value);
+     */
     // Adds the node with value v to the list headed by node with value u and
     // increments edgeCount
     void addEdge(int u, int v);
