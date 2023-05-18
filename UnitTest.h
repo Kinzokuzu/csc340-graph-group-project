@@ -253,13 +253,13 @@ bool test_GraphAddEdge() {
 inline
 bool test_GraphGetBFS1() {
   std::cout << "TESTING: Graph::getBFS() #1" << std::endl;
-  Graph expected_tree(5);
+  Tree expected_tree(5);
   expected_tree.addEdge(0, 1);
   expected_tree.addEdge(0, 2);
   expected_tree.addEdge(1, 3);
   expected_tree.addEdge(2, 4);
   std::cout << "Expected BFS tree:\n";
-  expected_tree.printGraph();
+  expected_tree.printTree();
 
   Graph test(5);
   test.addEdge(0, 1);
@@ -270,7 +270,7 @@ bool test_GraphGetBFS1() {
   test.addEdge(3, 4);
 
   std::cout << "Returned BFS tree:\n";
-  Graph BFS_tree = test.getBFS(0);
+  Tree BFS_tree = test.getBFS(0);
 
   bool result = BFS_tree.isEqual(expected_tree);
   if (result) {
@@ -286,14 +286,14 @@ bool test_GraphGetBFS1() {
 inline
 bool test_GraphGetBFS2() {
   std::cout << "TESTING: Graph::getBFS() #2" << std::endl;
-  Graph expected_tree(6);
+  Tree expected_tree(6);
   expected_tree.addEdge(2, 4);
   expected_tree.addEdge(2, 5);
-  expected_tree.addEdge(3, 1);
   expected_tree.addEdge(4, 0);
   expected_tree.addEdge(5, 3);
+  expected_tree.addEdge(0, 1);
   std::cout << "Expected BFS tree:" << std::endl;
-  expected_tree.printGraph();
+  expected_tree.printTree();
 
   Graph test(6);
   test.addEdge(1, 0);
@@ -304,7 +304,7 @@ bool test_GraphGetBFS2() {
   test.addEdge(5, 3);
 
   std::cout << "Returned BFS tree:\n";
-  Graph BFS_tree = test.getBFS(2);
+  Tree BFS_tree = test.getBFS(2);
 
   bool result = BFS_tree.isEqual(expected_tree);
   if (result) {
