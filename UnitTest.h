@@ -151,20 +151,21 @@ bool test_GraphIsEqual() {
 
 inline
 bool test_GraphAddNode() {
-  std::cout << "look at test_GraphAddNode | ";
-  return false;
-  /*
   bool result = true;
-
   Graph first(2);
-
   if (first.getNodeCount() != 2) {
+      std::cout << first.getNodeCount();
     result = false;
     std::cout << "FAILED: test_GraphAddNode() | ";
   }
+  first.addNode(10);
+  first.addNode(20);
+    first.addNode(20);
 
+    first.addNode(20);
+
+    first.printGraph();
   return result;
-  */
 }
 
 inline

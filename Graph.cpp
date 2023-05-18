@@ -83,7 +83,7 @@ Graph::Graph() {
 
 Graph::Graph(int size) {
   try {
-    if (size <= 0) {
+      if (size <= 0) {
       throw std::invalid_argument("Graph size must be >= 1");
     }
 
@@ -175,9 +175,9 @@ bool Graph::isEqual(const Graph &comp) {
 void Graph::addNode(int newNodeVal) {
   try{
     // Check if newNode is greater than nodeCount
-    if(newNodeVal >= nodeCount){
-      throw std::invalid_argument("New node must be greater than nodeCount");
-    }
+//    if(newNodeVal >= nodeCount){
+//      throw std::invalid_argument("New node must be greater than nodeCount");
+//    }
     // Allocate memory for new node
     Node *newNode = new Node;
     // Set value of new node to newNode
@@ -185,6 +185,11 @@ void Graph::addNode(int newNodeVal) {
     // Set next of new node to nullptr because it is at the end of the list
     newNode->setNext(nullptr);
     // Add new node to adj_list, this should always be right because if the node count is 0 then the new node will be at index 0 and then it will increment to 1 and so on
+    Node** temp = new Node*[nodeCount+1];
+    for(int i = 0; i< nodeCount; i++){
+        temp[i] = adj_list[i];
+    }
+    adj_list = temp;
     adj_list[nodeCount] = newNode;
     // Increment nodeCount
     nodeCount++;
