@@ -204,30 +204,45 @@ void Graph::addNode(int newNodeVal) {
 }
 
 void Graph::addEdge(int u, int v) {
-    try{
-    // Check if u and v are valid node indexes
-    if(u >= nodeCount || v >= nodeCount || u < 0 || v < 0){
+   try {
+    // if u and v are are greater than nodeCount valid node indexes
+    if (u >= nodeCount || v >= nodeCount || u < 0 || v < 0) {
       throw std::invalid_argument("Invalid node indexes");
     }
-    // Find the end of the adjacency list for node u
-    Node *curr = adj_list[u];
-    while(curr->getNext()){
+
+    //the end of the adjacency list for node u
+    Node* curr = adj_list[u];
+    while (curr->getNext()) {
       curr = curr->getNext();
     }
-    // Create a new node for node v
-    Node *newNode = new Node;
+
+    // Create a new node for node v and append it to the end of the adjacency list for node u
+    Node* newNode = new Node;
     newNode->setValue(v);
     newNode->setNext(nullptr);
-    // Append the new node to the end of the adjacency list for node u
     curr->setNext(newNode);
-  }
-  catch(std::invalid_argument &e){
+    // Increment the edge count
+    edgeCount++;
+
+    // Add an edge from v to u by finding the end of the adjacency list for node v
+    curr = adj_list[v];
+    while (curr->getNext()) {
+      curr = curr->getNext();
+    }
+
+    // Create a new node for node u and append it to the end of the adjacency list for node v
+    newNode = new Node;
+    newNode->setValue(u);
+    newNode->setNext(nullptr);
+    curr->setNext(newNode);
+     //Catch invalid argument
+  } catch (std::invalid_argument& e) {
     std::cout << e.what() << std::endl;
-  }
-  catch(std::bad_alloc &e){
+    //Catch bad alloc
+  } catch (std::bad_alloc& e) {
     std::cout << e.what() << std::endl;
-  }
-  catch(...){
+     //Catch unknown error
+  } catch (...) {
     std::cout << "Unknown error" << std::endl;
   }
 }
