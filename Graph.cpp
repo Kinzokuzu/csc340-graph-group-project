@@ -177,7 +177,8 @@ Tree Graph::getBFS(int v) {
                 visited[neighbor] = true;              // mark the neighbor as visited
                 q.push(neighbor);                      // enqueue the neighbor
                 bfsOrder.push_back(neighbor);           // add the visited node to the BFS order
-                bfsGraph.addEdge(nodeIndex, neighbor); // add an edge to the BFS graph
+                bfsGraph.addEdge(nodeIndex, neighbor);// add an edge to the BFS graph
+                std::cout << "Adding edge: " << nodeIndex << " -> " << neighbor << std::endl;
             }
 
             curr = curr->getNext(); // move to the next neighbor

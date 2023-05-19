@@ -17,29 +17,26 @@ Tree::Tree() {
 }
 
 Tree::Tree(int size) {
-  try {
-    if (size <= 0) {
-      throw std::invalid_argument("Graph size must be >= 1");
-    }
+    try {
+        if (size <= 0) {
+            throw std::invalid_argument("Graph size must be >= 1");
+        }
 
-    this->nodeCount =  size;
-    this->edgeCount = 0;
-    // Allocate memory for adjacency list
-    this->adj_list = new Node*[size];
-  }
-  catch (std::invalid_argument &e) {
-    std::cout << e.what() << std::endl;
-  }
-  catch (std::bad_alloc &e) {
-    std::cout << e.what() << std::endl;
-  }
-  // Add size nodes to adjacency list
-  for (int i = 0; i < size; i++) {
-    Node *curr = new Node;
-    curr->setValue(i);
-    curr->setNext(nullptr);
-    this->adj_list[i] = curr;
-  }
+        this->nodeCount = size;
+        this->edgeCount = 0;
+        // Allocate memory for adjacency list
+        this->adj_list = new Node*[size];
+        for (int i = 0; i < size; i++) {
+            Node* curr = new Node;
+            curr->setValue(i);
+            curr->setNext(nullptr);
+            this->adj_list[i] = curr;
+        }
+    } catch (std::invalid_argument& e) {
+        std::cout << e.what() << std::endl;
+    } catch (std::bad_alloc& e) {
+        std::cout << e.what() << std::endl;
+    }
 }
 // Big-3
 Tree::~Tree() {
@@ -147,36 +144,44 @@ int Tree::getNodeCount() const { return this->nodeCount; }
 int Tree::getEdgeCount() const { return this->edgeCount; }
 
 void Tree::printTree() {
-  for (int i = 0; i < this->nodeCount; i++) {
-    this->adj_list[i]->printList();
-  }
+    for (int i = 0; i < this->nodeCount; i++) {
+        // Only print the node if it has connections
+        if (this->adj_list[i]->getNext() != nullptr) {
+            this->adj_list[i]->printList();
+        }
+    }
 }
 void Tree::updateAdjList(const std::vector<int>& bfsOrder)
 {
-    Node** newAdjList = new Node*[nodeCount]; // create a new adjacency list
+    Node** newAdjList = new Node*[nodeCount];
 
     // Traverse the BFS order and update the adjacency list accordingly
     for (int i = 0; i < bfsOrder.size(); i++) {
         int nodeIndex = bfsOrder[i];
         Node* curr = adj_list[nodeIndex];
-        Node* newCurr = nullptr;
-        Node* prev = nullptr;
+
+        if (curr == nullptr) {
+            newAdjList[i] = nullptr;
+            continue;
+        }
+
+        Node* newCurr = new Node;
+        newCurr->setValue(curr->getValue());
+        newCurr->setNext(nullptr);
+        newAdjList[i] = newCurr;
+
+        Node* newPrev = newCurr;
+        curr = curr->getNext();
 
         // Traverse the original adjacency list and create the new order
         while (curr != nullptr) {
             Node* newNode = new Node;
             newNode->setValue(curr->getValue());
             newNode->setNext(nullptr);
-            if (prev) {
-                prev->setNext(newNode);
-            } else {
-                newCurr = newNode;
-            }
-            prev = newNode;
+            newPrev->setNext(newNode);
+            newPrev = newNode;
             curr = curr->getNext();
         }
-
-        newAdjList[i] = newCurr;
     }
 
     // Delete the original adjacency list
