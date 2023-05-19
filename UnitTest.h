@@ -287,11 +287,12 @@ inline
 bool test_GraphGetBFS2() {
   std::cout << "TESTING: Graph::getBFS() #2" << std::endl;
   Tree expected_tree(6);
-  expected_tree.addEdge(2, 4);
-  expected_tree.addEdge(2, 5);
-  expected_tree.addEdge(4, 0);
-  expected_tree.addEdge(5, 3);
-  expected_tree.addEdge(0, 1);
+    expected_tree.addEdge(1, 0);
+    expected_tree.addEdge(2, 4);
+    expected_tree.addEdge(2, 5);
+    expected_tree.addEdge(3, 1);
+    expected_tree.addEdge(4, 0);
+    expected_tree.addEdge(5, 3);
   std::cout << "Expected BFS tree:" << std::endl;
   expected_tree.printTree();
 

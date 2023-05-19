@@ -1,6 +1,7 @@
 #ifndef TREE_CPP_INCLUDE
 #define TREE_CPP_INCLUDE
 
+#include <queue>
 #include "Tree.h"
 
 Tree::Tree() {
@@ -42,10 +43,13 @@ Tree::Tree(int size) {
 }
 // Big-3
 Tree::~Tree() {
-  if (this->adj_list) {
-    delete [] this->adj_list;
-    this->adj_list = nullptr;
-  }
+    if (this->adj_list) {
+        for (int i = 0; i < this->nodeCount; i++) {
+            delete this->adj_list[i];  // Deallocate the Node
+        }
+        delete [] this->adj_list;    // Deallocate the array of Node pointers
+        this->adj_list = nullptr;
+    }
 }
 
 Tree::Tree(const Tree &clone) {
@@ -146,6 +150,48 @@ void Tree::printTree() {
   for (int i = 0; i < this->nodeCount; i++) {
     this->adj_list[i]->printList();
   }
+}
+void Tree::updateAdjList(const std::vector<int>& bfsOrder)
+{
+    Node** newAdjList = new Node*[nodeCount]; // create a new adjacency list
+
+    // Traverse the BFS order and update the adjacency list accordingly
+    for (int i = 0; i < bfsOrder.size(); i++) {
+        int nodeIndex = bfsOrder[i];
+        Node* curr = adj_list[nodeIndex];
+        Node* newCurr = nullptr;
+        Node* prev = nullptr;
+
+        // Traverse the original adjacency list and create the new order
+        while (curr != nullptr) {
+            Node* newNode = new Node;
+            newNode->setValue(curr->getValue());
+            newNode->setNext(nullptr);
+            if (prev) {
+                prev->setNext(newNode);
+            } else {
+                newCurr = newNode;
+            }
+            prev = newNode;
+            curr = curr->getNext();
+        }
+
+        newAdjList[i] = newCurr;
+    }
+
+    // Delete the original adjacency list
+    for (int i = 0; i < nodeCount; i++) {
+        Node* curr = adj_list[i];
+        while (curr != nullptr) {
+            Node* next = curr->getNext();
+            delete curr;
+            curr = next;
+        }
+    }
+    delete[] adj_list;
+
+    // Assign the new adjacency list
+    adj_list = newAdjList;
 }
 // End class Tree
 #endif

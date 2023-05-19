@@ -152,41 +152,49 @@ void Graph::addEdge(int u, int v) {
   }
 }
 
-Tree Graph::getBFS(int v)
-{
-  Tree bfsGraph(this->nodeCount);                    // create a new graph for BFS traversal
-  std::vector<bool> visited(this->nodeCount, false); // keep track of visited nodes
-  std::queue<int> q;                                 // queue for BFS traversal
+Tree Graph::getBFS(int v) {
+    Tree bfsGraph(this->nodeCount);                    // create a new graph for BFS traversal
+    std::vector<bool> visited(this->nodeCount, false); // keep track of visited nodes
+    std::queue<int> q;                                 // queue for BFS traversal
+    std::vector<int> bfsOrder;                         // store the order of visited nodes in BFS
 
-  visited[v] = true; // mark the starting node as visited
-  q.push(v);         // enqueue the starting node
+    visited[v] = true; // mark the starting node as visited
+    q.push(v);         // enqueue the starting node
+    bfsOrder.push_back(v); // add the starting node to the BFS order
 
-  while (!q.empty()) // while queue is not empty
-  {
-    int nodeIndex = q.front();        // get the front element of the queue
-    q.pop();                          // remove the front element from the queue
-    Node *node = adj_list[nodeIndex]; // get the actual node from the adjacency list
-
-    Node *curr = node; // pointer to traverse the adjacency list of the current node
-
-    while (curr != nullptr)
+    while (!q.empty()) // while queue is not empty
     {
-      int neighbor = curr->getValue(); // get the value of the neighbor node
+        int nodeIndex = q.front();        // get the front element of the queue
+        q.pop();                          // remove the front element from the queue
+        Node *node = adj_list[nodeIndex]; // get the actual node from the adjacency list
 
-      if (!visited[neighbor])
-      {
-        visited[neighbor] = true;              // mark the neighbor as visited
-        q.push(neighbor);                      // enqueue the neighbor
-        bfsGraph.addEdge(nodeIndex, neighbor); // add an edge to the BFS graph
-      }
+        Node *curr = node; // pointer to traverse the adjacency list of the current node
 
-      curr = curr->getNext(); // move to the next neighbor
+        while (curr != nullptr) {
+            int neighbor = curr->getValue(); // get the value of the neighbor node
+
+            if (!visited[neighbor]) {
+                visited[neighbor] = true;              // mark the neighbor as visited
+                q.push(neighbor);                      // enqueue the neighbor
+                bfsOrder.push_back(neighbor);           // add the visited node to the BFS order
+                bfsGraph.addEdge(nodeIndex, neighbor); // add an edge to the BFS graph
+            }
+
+            curr = curr->getNext(); // move to the next neighbor
+        }
     }
-  }
-  // Print BFS tree (Graph)
-  bfsGraph.printTree();
 
-  return bfsGraph;
+    // Update the adjacency list of the BFS graph to match the BFS order
+    bfsGraph.updateAdjList(bfsOrder);
+    bfsGraph.printTree();
+    // Print BFS order
+    std::cout << "BFS Order: ";
+    for (int node: bfsOrder) {
+        std::cout << node << " ";
+    }
+    std::cout << std::endl;
+
+    return bfsGraph;
 }
 
 Node* Graph::getShortestPath(int s, int v) {

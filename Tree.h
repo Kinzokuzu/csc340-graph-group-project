@@ -1,6 +1,7 @@
 #ifndef TREE_H_CPP
 #define TREE_H_CPP
 
+#include <vector>
 #include "Node.h"
 
 class Tree {
@@ -21,11 +22,13 @@ class Tree {
     int getEdgeCount() const;
 
     void printTree();
+    void updateAdjList(const std::vector<int>& bfsOrder);
 
   private:
     int nodeCount; // Holds the total number of nodes in graph.
     int edgeCount; // Hold the total number of edges in graph
     Node **adj_list;
+    std::vector<int> bfsOrder;
 }; // End class Tree
 
 #endif
