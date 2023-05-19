@@ -107,7 +107,11 @@ bool Graph::isEqual(const Graph &comp) {
 }
 
 void Graph::addEdge(int u, int v) {
+
+ 
+
   try {
+
     // if u and v are are greater than nodeCount valid node indexes
     if (u >= nodeCount || v >= nodeCount || u < 0 || v < 0) {
       throw std::invalid_argument("Invalid node indexes");
@@ -119,8 +123,12 @@ void Graph::addEdge(int u, int v) {
       curr = curr->getNext();
     }
 
+
+    // Create a new node for node v and append it to the end of the adjacency list for node u
+
     // Create a new node for node v and append it to the end of the adjacency
     // list for node u
+
     Node* newNode = new Node;
     newNode->setValue(v);
     newNode->setNext(nullptr);
@@ -134,19 +142,31 @@ void Graph::addEdge(int u, int v) {
       curr = curr->getNext();
     }
 
+
+    // Create a new node for node u and append it to the end of the adjacency list for node v
+
     // Create a new node for node u and append it to the end of the adjacency
     // list for node v
+
     newNode = new Node;
     newNode->setValue(u);
     newNode->setNext(nullptr);
     curr->setNext(newNode);
-    //Catch invalid argument
+
+     //Catch invalid argument
+
+
+
   } catch (std::invalid_argument& e) {
     std::cout << e.what() << std::endl;
     //Catch bad alloc
   } catch (std::bad_alloc& e) {
     std::cout << e.what() << std::endl;
-    //Catch unknown error
+
+     //Catch unknown error
+
+
+
   } catch (...) {
     std::cout << "Unknown error" << std::endl;
   }
