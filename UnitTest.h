@@ -23,7 +23,6 @@ bool test_NodeAssignment() {
   try {
     first = new Node;
     second = new Node;
-    test = new Node;
   }
   catch (std::bad_alloc &e) {
     std::cout << e.what() << std::endl;
@@ -50,7 +49,6 @@ bool test_NodeAssignment() {
 inline
 bool test_NodeIsEqual() {
   std::cout << "TESTING: Node::isEqual()" << std::endl;
-  bool result = true;
 
   Node *first, *second, *test1, *test2;
   try {
@@ -73,7 +71,7 @@ bool test_NodeIsEqual() {
   test1->setNext(test2);
   test2->setNext(nullptr);
 
-  result = test1->isEqual(*first);
+  bool result = test1->isEqual(*first);
 
   if (result) {
     std::cout << "PASSED: test_NodeIsEqual() | ";
@@ -86,7 +84,7 @@ bool test_NodeIsEqual() {
 }
 
 inline
-bool test_AddNode() {
+bool test_NodeAddNode() {
   std::cout << "TESTING: Node::addNode()" << std::endl;
 
   Node *first;
@@ -217,21 +215,7 @@ bool test_GraphIsEqual() {
 
   return result;
 }
-/*
-inline
-bool test_GraphAddNode() {
-  bool result = true;
 
-  Graph first(2);
-
-  if (first.getNodeCount() != 2) {
-    result = false;
-    std::cout << "FAILED: test_GraphAddNode() | ";
-  }
-
-  return result;
-}
-*/
 inline
 bool test_GraphAddEdge() {
   std::cout << "TESTING: Graph::addEdge()" << std::endl;
@@ -312,6 +296,43 @@ bool test_GraphGetBFS2() {
   }
   else {
     std::cout << "FAILED: test_GraphGetBDF2() | ";
+  }
+
+  return result;
+}
+
+inline
+bool test_GraphGetBFS3() {
+  std::cout << "TESTING: Graph::getBFS() #3" << std::endl;
+  Tree expected_tree(7);
+  expected_tree.addEdge(6, 1);
+  expected_tree.addEdge(6, 2);
+  expected_tree.addEdge(6, 3);
+  expected_tree.addEdge(6, 4);
+  expected_tree.addEdge(1, 0);
+  expected_tree.addEdge(3, 5);
+  std::cout << "Expected BFS tree:" << std::endl;
+  expected_tree.printTree();
+
+  Graph test(7);
+  test.addEdge(0, 1);
+  test.addEdge(0, 2);
+  test.addEdge(1, 6);
+  test.addEdge(2, 6);
+  test.addEdge(6, 3);
+  test.addEdge(6, 4);
+  test.addEdge(3, 5);
+  test.addEdge(4, 5);
+
+  std::cout << "Returned BFS tree:\n";
+  Tree BFS_tree = test.getBFS(6);
+
+  bool result = BFS_tree.isEqual(expected_tree);
+  if (result) {
+    std::cout << "PASSED: test_GraphGetBDF3() | ";
+  }
+  else {
+    std::cout << "FAILED: test_GraphGetBDF3() | ";
   }
 
   return result;
@@ -400,6 +421,56 @@ bool test_GraphGetShortestPath2() {
   }
   else {
     std::cout << "FAILED: test_GraphGetShortestPath2() | ";
+  }
+
+  return result;
+}
+inline
+bool test_GraphGetShortestPath3() {
+  std::cout << "TESTING: Graph::getShortestPath() #3" << std::endl;
+  Node *expected_list, *node1, *node6, *node3, *node5;
+  try {
+    expected_list = new Node;
+    node1 = new Node;
+    node6 = new Node;
+    node3 = new Node;
+    node5 = new Node;
+    // Expected list is as follows: 0 -> 1 -> 6 -> 3 -> 5
+    expected_list->setValue(0);
+    expected_list->setNext(node1);
+    node1->setValue(1);
+    node1->setNext(node6);
+    node6->setValue(6);
+    node6->setNext(node3);
+    node3->setValue(3);
+    node3->setNext(node5);
+    node5->setValue(5);
+  }
+  catch (std::bad_alloc &e) {
+    std::cout << e.what() << std::endl;
+  }
+  std::cout << "Expected shortest path:\n";
+  expected_list->printList();
+
+  Graph test(7);
+  test.addEdge(0, 1);
+  test.addEdge(0, 2);
+  test.addEdge(1, 6);
+  test.addEdge(2, 6);
+  test.addEdge(6, 3);
+  test.addEdge(6, 4);
+  test.addEdge(3, 5);
+  test.addEdge(4, 5);
+
+  std::cout << "Returned shortest path:\n";
+  Node *test_list = test.getShortestPath(0, 5);
+
+  bool result = test_list->isEqual(*expected_list);
+  if (result) {
+    std::cout << "PASSED: test_GraphGetShortestPath3() | ";
+  }
+  else {
+    std::cout << "FAILED: test_GraphGetShortestPath3() | ";
   }
 
   return result;
