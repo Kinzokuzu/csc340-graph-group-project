@@ -21,7 +21,7 @@ Tree::Tree(int size) {
       throw std::invalid_argument("Graph size must be >= 1");
     }
 
-    this->nodeCount =  size;
+    this->nodeCount = size;
     this->edgeCount = 0;
     // Allocate memory for adjacency list
     this->adj_list = new Node*[size];
@@ -35,8 +35,10 @@ Tree::Tree(int size) {
   // Add size nodes to adjacency list
   for (int i = 0; i < size; i++) {
     Node *curr = new Node;
-    curr->setValue(i);
-    curr->setNext(nullptr);
+    // This code was commented out because we don't want to give our Node fields
+    // values.
+    //curr->setValue(i);
+    //curr->setNext(nullptr);
     this->adj_list[i] = curr;
   }
 }
@@ -112,19 +114,27 @@ void Tree::addEdge(int u, int v) {
     if (u >= nodeCount || v >= nodeCount || u < 0 || v < 0) {
       throw std::invalid_argument("Invalid node indexes");
     }
-
-    //the end of the adjacency list for node u
-    Node* curr = adj_list[u];
-    while (curr->getNext()) {
-      curr = curr->getNext();
+    // Check if u exists
+    bool u_exists = false;
+    for (int pos= 0; pos < this->nodeCount && !u_exists; pos++) {
+      if (adj_list[pos]->getValue() == u) {
+        // Add v to u
+        adj_list[pos]->addNode(v);
+        u_exists = true;
+      }
+    }
+    // If u doesn't exist, add u in the next available position
+    for (int pos = 0; pos < this->nodeCount && !u_exists; pos++) {
+      // Look for first available default node
+      if (adj_list[pos]->getValue() == -1) {
+        // Create u
+        adj_list[pos]->setValue(u);
+        u_exists = true;
+        // Add v to u
+        adj_list[pos]->addNode(v);
+      }
     }
 
-    // Create a new node for node v and append it to the end of the adjacency
-    // list for node u
-    Node* newNode = new Node;
-    newNode->setValue(v);
-    newNode->setNext(nullptr);
-    curr->setNext(newNode);
     // Increment the edge count
     edgeCount++;
     //Catch invalid argument
@@ -144,7 +154,9 @@ int Tree::getEdgeCount() const { return this->edgeCount; }
 
 void Tree::printTree() {
   for (int i = 0; i < this->nodeCount; i++) {
-    this->adj_list[i]->printList();
+    if (this->adj_list[i]->getNext()) {
+      this->adj_list[i]->printList();
+    }
   }
 }
 // End class Tree
