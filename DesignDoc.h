@@ -67,5 +67,16 @@ input(val)
     set newNode's next to nullptr
   append the list by adding curr's next pointer to be newNode
   Time complexity: O(n) with n being how many nodes there are.
+
+getShortestPath():
+  Initialize data structures (visited, parent, queue).
+  Mark the starting node as visited and enqueue it.
+  Perform a BFS traversal until the queue is empty, and for each node visited, update the visited status, set parent, and enqueue neighbors.
+  Stop BFS if the destination node is found, and then check if a path from start to destination exists based on the parent of the destination node.
+  If no path exists, return nullptr.
+  If the start and destination nodes are the same, return a linked list with a single node.
+  Build the shortest path by traversing the parent array in reverse order.
+  Print the shortest path.
+  The time complexity is O(v + e), where v is the number of nodes and e is the number of edges in the graph.
 */
 
