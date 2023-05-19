@@ -19,7 +19,7 @@ class Graph {
     bool isEqual(const Graph &comp);
     // Adds the node v to node u's adjacency list and vice versa, also increments
     // edgeCount
-    virtual void addEdge(int u, int v);
+    void addEdge(int u, int v);
     // Returns and prints the breadth-first-search tree (graph) from a given
     // source node
     Tree getBFS(int v);
