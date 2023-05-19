@@ -22,12 +22,12 @@
  * any exceptions occur, i
  * catch, handle and print corresponding error messages.
  * 
- * time complexity: O(u + v) because in the worst case, we have to iterate through each node(u) until the end of edges(v)
- * To create a new node(v), we need to update the next pointer of the last node. So it takes O(1). 
+ * time complexity: O(n) because in the worst case, we have to iterate through all edges until the end.
  * 
- * space complexity: O(1) because we are not creating any extra space for two nodes
+ * space complexity: O(1) because we are not creating any extra space 
  */
 /*
+
 Implement the breadth first search algorithm
 Pseudo Code :
 
@@ -58,3 +58,6 @@ input(val)
   append the list by adding curr's next pointer to be newNode
   Time complexity: O(n) with n being how many nodes there are.
 */
+
+
+
