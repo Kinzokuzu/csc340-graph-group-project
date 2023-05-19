@@ -1,19 +1,61 @@
 Design Doc
 
+Link: https://github.com/Kinzokuzu/csc340-graph-group-project.git
+
 Authors: 11am Group 9
          Saul Cervantes-Hernandez
          Mya Phyu
          Kiran Poudel
          Guillermo Reyes Yanez
          Sidney Thomas
+         
+Date: 5/19/23
 
 Contriubutions:
-  Saul Cervantes-Hernandez: Project design, unit testing, constructors and
-    "Big-3", miscellaneous functions
-  Mya Phyu: Graph::addEdge(), Tree::addEdge()
-  Kiran Poudel: Tree:addEdge(), Node::addNode()
-  Guillermo Reyes Yanez: Graph::getShortestPath()
-  Sidney Thomas: Graph::getBFS()
+• Saul Cervantes-Hernandez: Project design, unit testing, constructors and
+  "Big-3", miscellaneous functions
+• Mya Phyu: Graph::addEdge(), Tree::addEdge(), created the algorithm used to add edges
+  in both the Graph and Tree classes
+• Kiran Poudel: Tree:addEdge(), Node::addNode(), modified the addEdge algorithm to create
+  a tree given by Graph::getBFS()
+• Guillermo Reyes Yanez: Graph::getShortestPath(), implemented the algorithm given in
+  page 10 of the slides
+• Sidney Thomas: Graph::getBFS(), implemented the algorithm given in page 7 of the
+  project slides
+    
+Algorithms:
+• addNode(): (Kiran Poudel)
+  input(val)
+  set curr as the current node
+  while curr has a next node-> curr = next node
+  create a new node newNode
+  try:
+    set newNode's value to val
+    set newNode's next to nullptr
+  append the list by adding curr's next pointer to be newNode
+  Time complexity: O(n) with n being how many nodes there are.
+
+• addEdge(): (Mya Phyu)
+pseudocode:
+- checks if the provided node indexes u and v are within the valid range.
+If the indexes are invalid, it throws an InvalidNodeIndexesException.
+Otherwise, it traverses to the end of the adjacency list for node u.
+
+- creates a new node object newNode and sets its value to v.
+- appends newNode to the end of the adjacency list for node u.
+- increments the edgeCount variable to keep track of the number of edges.
+- It performs the same steps for node v, adding an edge from v to u.
+- If any exceptions occur, 
+- catch and print the corresponding error messages.
+
+time complexity: O(n) 
+In the worst case, we have to loop through all the edges until the last edge
+
+space complexity: O(1)
+Since we are not storing any extra space.
+
+• getBFS(): (Sidney Thomas, see page 7 of slides)
+• getShortestPath(): (Guillermo Reyes Yanez, see page 10 of slides) 
 
 Data Structures:
 • A Node class was created in order to store the data of the verticies in a graph
