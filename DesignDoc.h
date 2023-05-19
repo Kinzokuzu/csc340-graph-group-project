@@ -10,7 +10,19 @@
  */
 
 /* addEdge()
- * time complexity: O(u) because in the worst case, we have to iterate through each node(u) until the end
+ * pseudocode:
+ * checks if the provided node indexes u and v are within the valid range.
+ * If the indexes are invalid, it throws an InvalidNodeIndexesException.
+ * Otherwise, it traverses to the end of the adjacency list for node u.
+ * It creates a new node object newNode and
+ *  sets its value to v.
+ * It appends newNode to the end of the adjacency list for node u.
+ * increments the edgeCount variable to keep track of the number of edges.
+ * It performs the same steps for node v, adding an edge from v to u.
+ * any exceptions occur, i
+ * catch, handle and print corresponding error messages.
+ * 
+ * time complexity: O(u + v) because in the worst case, we have to iterate through each node(u) until the end of edges(v)
  * To create a new node(v), we need to update the next pointer of the last node. So it takes O(1). 
  * 
  * space complexity: O(1) because we are not creating any extra space for two nodes
