@@ -1,0 +1,120 @@
+Design Doc
+
+Authors: 11am Group 9
+         Saul Cervantes-Hernandez
+         Mya Phyu
+         Kiran Poudel
+         Guillermo Reyes Yanez
+         Sidney Thomas
+
+Contriubutions:
+  Saul Cervantes-Hernandez: Project design, unit testing, constructors and
+    "Big-3", miscellaneous functions
+  Mya Phyu: Graph::addEdge(), Tree::addEdge()
+  Kiran Poudel: Tree:addEdge(), Node::addNode()
+  Guillermo Reyes Yanez: Graph::getShortestPath()
+  Sidney Thomas: Graph::getBFS()
+
+Data Structures:
+• A Node class was created in order to store the data of the verticies in a graph
+and tree, and subsequently a singly linked list of Nodes
+• A Tree class was created to store the a Breadth First Search tree of a given
+graph
+• A Graph class was created as part of functionality requirements of the project
+
+Node
+  fields:
+    // Holds the data of the Node object
+    int value
+    // Points to a subsequent Node object, used to make a singly linked list of
+    // Node objects
+    Node *next
+  methods:
+    // Default constructor, sets value = -1 & next = nullptr
+    Node()
+    // Without modifiying addresses, the assignment operator copies the fields of
+    // rhs to the Node that calls the method
+    Node& operator=(const Node &rhs)
+    // Compares the fields of comp and the Node that calls the method
+    bool isEqual(const Node &comp)
+    // Sets the value field to val
+    void setValue(int val)
+    // Returns the value field
+    int getValue()
+    // Sets the 'next' field
+    void setNext(Node *n)
+    // Returns the 'next' field
+    Node* getNext()
+    // Appends a Node object to the end of the list pointed to by the object
+    // which calls the method
+    void addNode(int val)
+    // Prints the list pointed to by the object which calls the method
+    void printList()
+
+Tree
+  fields:
+    // Holds the total number of nodes in the Tree object
+    int nodeCount
+    // Holds the total number of edges in the Treeobject
+    int edgeCount
+    // Holds the adjacency lists of all Node objects in tree
+    Node **adj_list
+  methods:
+    // Default constructor, sets nodeCount = 0, edgeCount = 0
+    Tree()
+    // Creates a tree with size Node objects (default construction)
+    Tree(int size)
+    // Frees adj_list
+    ~Tree()
+    // Copy constructor
+    Tree(const Tree &clone)
+    // Without modifying addresses, copies the fields of rhs to the Tree object
+    // which calls the method
+    Tree& operator=(const Tree &rhs)
+    // Compares the fields of Tree comp to the Tree wich calls the method
+    bool isEqual(const Tree &comp)
+    // Adds an edge (branch) between Node u and Node v, creates Node objects as
+    // necessary
+    void addEdge(int u, int v)
+    // Returns nodeCount
+    int getNodeCount()
+    // Returns edgeCount
+    int getEdgeCount()
+    // Prints the Tree objects begining at it's root
+    void printTree()
+
+Graph
+  fields:
+    // Holds the total number of nodes in the Graph object
+    int nodeCount
+    // Holds the total number of edges in the Graph object
+    int edgeCount
+    // Holds the adjecency lists of all Nodes in the Graph object
+    Node **adj_list
+  methods: 
+    // Default constructor, sets nodeCount = 0, edgeCount = 0
+    Graph()
+    // Creates a Garph with size Nodes (default construction)
+    Graph(int size)
+    // Frees adj_list
+    ~Graph()
+    // Copu constructor
+    Graph(const Graph &clone)
+    // Without modifying addresses, copies the fields of rhs to the Tree object
+    // which calls the method
+    Graph& operator=(const Graph &rhs)
+    // Compares the fields of Graph comp to the Graph wich calls the method
+    bool isEqual(const Graph &comp)
+    // Adds and edge between Node u and and Node v
+    void addEdge(int u, int v)
+    // Returns a Tree object containing the breadth first search starting from
+    // Node v
+    Tree getBFS(int v)
+    // Returns a the shortest path from Node s to Node v as a list of Nodes
+    Node* getShortestPath(int s, int v)
+    // Returns nodeCount
+    int getNodeCount()
+    // Returns edgeCount
+    int getEdgeCount()
+    // Prints the Graph
+    void printGraph()
