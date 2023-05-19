@@ -12,7 +12,7 @@ class Graph {
     Graph();         // Sets nodeCount = 0, edgeCount = 0
     Graph(int size); // Sets nodeCount = size and create size nodes
     // Big 3
-    virtual ~Graph();                   // De-constructor
+    ~Graph();                   // De-constructor
     Graph(const Graph &clone);          // Copy constructor
     Graph& operator=(const Graph &rhs); // Assignment operator
 
